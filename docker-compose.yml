@@ -6,6 +6,4 @@ services:
       dockerfile: Dockerfile
 
     volumes:
-      - ./:/rails:delegated
-
-    command: sleep infinity
+      - ./:/rails:cached
