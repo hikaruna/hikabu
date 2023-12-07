@@ -4,7 +4,7 @@
 	"name": "Ruby on Rails",
 	"dockerComposeFile": "../docker-compose.yml",
 	"service": "app",
-	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
+	"workspaceFolder": "/rails"
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},

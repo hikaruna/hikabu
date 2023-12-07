@@ -6,6 +6,6 @@ services:
       dockerfile: Dockerfile
 
     volumes:
-      - ./:/workspaces/hikabu:delegated
+      - ./:/rails:delegated
 
     command: sleep infinity
