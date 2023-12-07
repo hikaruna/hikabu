@@ -8,10 +8,9 @@ FROM ruby:$RUBY_VERSION as base
 WORKDIR /rails
 
 # Set production environment
-ENV RAILS_ENV="production" \
+ENV \
     BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+    BUNDLE_PATH="/usr/local/bundle"
 
 
 # Throw-away build stage to reduce size of final image
@@ -20,7 +19,7 @@ FROM base as build
 # Install packages needed to build gems
 RUN \
     --mount=type=cache,target=/var/cache/apt \
-    --mount=type=cache,target=/var/lib/apt \
+    --mount=type=cache,sharing=locked,target=/var/lib/apt \
     apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential git pkg-config
 
@@ -49,7 +48,7 @@ FROM base
 # Install packages needed for deployment
 RUN \
     --mount=type=cache,target=/var/cache/apt \
-    --mount=type=cache,target=/var/lib/apt \
+    --mount=type=cache,sharing=locked,target=/var/lib/apt \
     apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libsqlite3-0
 
@@ -67,7 +66,7 @@ CMD ["./bin/rails", "server"]
 
 RUN \
     --mount=type=cache,target=/var/cache/apt \
-    --mount=type=cache,target=/var/lib/apt \
+    --mount=type=cache,sharing=locked,target=/var/lib/apt \
     apt-get update -qq && apt-get install --no-install-recommends -y \
     less
 
