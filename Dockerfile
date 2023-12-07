@@ -58,8 +58,15 @@ CMD ["./bin/rails", "server"]
 
 
 RUN \
-  --mount=type=cache,target=/var/cache/apt \
-  --mount=type=cache,target=/var/lib/apt \
-  apt-get update && apt-get install -y \
-  less
-    
+    --mount=type=cache,target=/var/cache/apt \
+    --mount=type=cache,target=/var/lib/apt \
+    apt-get update -qq && apt-get install --no-install-recommends -y \
+    less
+
+RUN { \
+    echo 'source /usr/share/bash-completion/completions/git' ; \
+    echo 'source /etc/bash_completion.d/git-prompt' ; \
+} >> /etc/bash.bashrc
+ENV PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "' \
+GIT_PS1_SHOWDIRTYSTATE=1 \
+GIT_PS1_SHOWCOLORHINTS=1
